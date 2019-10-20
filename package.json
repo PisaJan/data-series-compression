@@ -7,7 +7,7 @@
         "test": "nyc ava",
         "coverage": "nyc report",
         "prepublish": "npm run build && npm test",
-        "build": "rm -rf ./dist && npm run lint && tsc && npm run copy",
+        "build": "rm -rf ./dist && tsc && npm run copy",
         "copy": "cd ./src && find . -not -name '*.ts' -not -name '*.http' -not -name '*.spec.ts' -type f -exec cp --parents {} ../dist \\;"
     },
     "main": "dist/index.js",

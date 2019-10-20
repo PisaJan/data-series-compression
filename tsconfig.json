@@ -1,0 +1,40 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "ESNext",
+        "strict": true,
+        "noImplicitReturns": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "sourceMap": true,
+        "removeComments": false,
+        "noUnusedLocals": true,
+        "pretty": true,
+        "importHelpers": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "preserveConstEnums": true,
+        "emitDecoratorMetadata": true,
+        "skipLibCheck": true,
+        "experimentalDecorators": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "incremental": false,
+        "newLine": "LF",
+        "outDir": "dist",
+        "declaration": true,
+        "baseUrl": "src",
+        "lib": [
+            "esnext"
+        ],
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "/**/*.spec.ts"
+    ],
+    "typeRoots": [
+        "node_modules/@types"
+    ]
+}

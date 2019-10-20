@@ -1,0 +1,45 @@
+{
+    "name": "data-series-compression",
+    "version": "0.0.1-alpha.1",
+    "description": "Small and simple library aimed to reduce number of data points without significant loss of important values.",
+    "author": "Jan Pisa <jan@janpisa.cz>",
+    "scripts": {
+        "test": "nyc ava",
+        "coverage": "nyc report",
+        "prepublish": "npm run build && npm test",
+        "build": "rm -rf ./dist && npm run lint && tsc && npm run copy",
+        "copy": "cd ./src && find . -not -name '*.ts' -not -name '*.http' -not -name '*.spec.ts' -type f -exec cp --parents {} ../dist \\;"
+    },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "license": "MIT",
+    "keywords": [
+        "data",
+        "series",
+        "compression"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:PisaJan/data-series-compression.git"
+    },
+    "engines": {
+        "node": ">= 12.0.0",
+        "npm": ">= 6.0.0"
+    },
+    "dependencies": {
+        "reflect-metadata": "^0.1.13",
+        "tslib": "^1.10.0"
+    },
+    "devDependencies": {
+        "@types/node": "^12.11.1",
+        "ava": "^1.4.1",
+        "commitlint": "^7.6.1",
+        "husky": "^2.7.0",
+        "nyc": "^14.1.1",
+        "prettier": "^1.18.2",
+        "pretty-quick": "^1.11.1",
+        "source-map-support": "^0.5.13",
+        "ts-node": "^8.4.1",
+        "typescript": "^3.6.4"
+    }
+}

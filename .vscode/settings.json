@@ -1,0 +1,50 @@
+{
+    "editor.detectIndentation": false,
+    "typescript.referencesCodeLens.enabled": true,
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "editor.tabSize": 4,
+    "editor.autoIndent": true,
+    "todohighlight.keywords": [
+        {
+            "text": "TODO",
+            "color": "white",
+            "backgroundColor": "orange",
+            "overviewRulerColor": "red"
+        }
+    ],
+    "todohighlight.isEnable": true,
+    "extensions.ignoreRecommendations": false,
+    "terminal.integrated.scrollback": 10000,
+    "javascript.referencesCodeLens.enabled": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "typescriptHero.imports.multiLineTrailingComma": false,
+    "typescriptHero.imports.organizeOnSave": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "rest-client.followredirect": false,
+    "tslint.alwaysShowRuleFailuresAsWarnings": false,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.tslint": true
+    },
+    "cSpell.language": "en",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "tslint.jsEnable": true,
+    "typescript.implementationsCodeLens.enabled": true,
+    "typescriptHero.imports.grouping": [
+        "Plains",
+        "/^(async_hooks|child_process|crypto|events|fs|http|http2|net|os|path|querystring|readline|stream|dgram|url|util|worker_threads)$/",
+        "Modules",
+        "/^@nestjs/",
+        "/^@fiedler/",
+        "/^client\//",
+        "/^common\//",
+        "/^components?\//",
+        "/^(config|configuration)\//",
+        "/^modules?\//",
+        "/^utils?\//",
+        "/^validations?\//",
+        "/^\\.\\.\/.+/",
+        "Workspace"
+    ]
+}

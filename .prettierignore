@@ -1,0 +1,6 @@
+/*.js
+/test/coverage
+/documentation
+/.vscode
+/tsconfig.json
+/package-lock.json

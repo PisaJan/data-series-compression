@@ -1,0 +1,10 @@
+*.js.map
+/.vscode
+/node_modules
+/src
+/test
+/ava.config.js
+/nyc.config.js
+/.huskyrc.js
+/commitlint.config.js
+/tsconfig.json

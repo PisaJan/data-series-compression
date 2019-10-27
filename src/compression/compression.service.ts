@@ -1,54 +1,83 @@
+import { IDataPoint } from '../data/point';
+
+import { Compare } from './../compare/compare.model';
+
 export class CompressionService {
-    public compress(items: [number, number][]): [number, number][] {
-        const failure: number = 0.005;
-        const result: [number, number][] = [];
-        for (let i: number = 0; i < items.length - 2; i += 3) {
-            const item1: number = items[i][1];
-            const item2: number = items[i + 1][1];
-            const item3: number = items[i + 2][1];
-            if (Math.abs(item1 - item2) <= item1 * failure) {
-                // item1 = item2
-                if (Math.abs(item2 - item3) <= item2 * failure) {
-                    // item2 = item3
-                    result.push(items[i + 1]);
-                } else {
-                    // item2 <> item3
-                    result.push(items[i]);
-                    result.push(items[i + 2]);
-                }
-            } else if (item1 < item2) {
-                // item1 < item2
-                if (Math.abs(item2 - item3) <= item2 * failure) {
-                    // item2 = item3
-                    result.push(items[i]);
-                    result.push(items[i + 2]);
-                } else if (item2 < item3) {
-                    // item2 < item3
-                    result.push(items[i]);
-                    result.push(items[i + 2]);
-                } else {
-                    // item2 > item3
-                    result.push(items[i]);
-                    result.push(items[i + 1]);
-                    result.push(items[i + 2]);
-                }
+    public constructor(private readonly deviation: number, private readonly rounds: number = 1) {}
+
+    private getCompressedResult(first: IDataPoint, second: IDataPoint, third: IDataPoint): IDataPoint[] {
+        if (Compare.isEqual(first, second, this.deviation)) {
+            /* first value ≈ second value */
+            if (Compare.isEqual(second, third, this.deviation)) {
+                /*
+                    second value ≈ third value
+                    shape -- is almost straight line (dependent on deviation) -> 66% compression
+                */
+                return [second];
             } else {
-                // item1 > item2
-                if (Math.abs(item2 - item3) <= item2 * failure) {
-                    // item2 = item3
-                    result.push(items[i]);
-                    result.push(items[i + 2]);
-                } else if (item2 < item3) {
-                    // item2 < item3
-                    result.push(items[i]);
-                    result.push(items[i + 1]);
-                    result.push(items[i + 2]);
-                } else {
-                    // item2 > item3
-                    result.push(items[i]);
-                    result.push(items[i + 2]);
-                }
+                /*
+                    second value ≠ third value
+                    shape _/ or shape ¯\ can be interpolated by connecting first and third point -> 33% compression
+                 */
+                return [first, third];
             }
+        } else if (first < second) {
+            /* first value < second value */
+            if (Compare.isEqual(second, third, this.deviation)) {
+                /*
+                    second value ≈ third value
+                    shape /¯ can be interpolated by connecting first and third point -> 33% compression
+                 */
+                return [first, third];
+            } else if (second < third) {
+                /*
+                    second value < third value
+                    shape / can be interpolated by connecting first and third point -> 33% compression
+                */
+                return [first, third];
+            } else {
+                /*
+                    second value > third value
+                    shape /\ is local maximum -> no compression
+                */
+                return [first, second, third];
+            }
+        } else {
+            /* first value > second value */
+            if (Compare.isEqual(second, third, this.deviation)) {
+                /*
+                    second value ≈ third value
+                    shape \_ can be interpolated by connecting first and third point -> 33% compression
+                */
+                return [first, third];
+            } else if (second < third) {
+                /*
+                    second value < third value
+                    shape \/ is local minimum -> no compression
+                */
+                return [first, second, third];
+            } else {
+                /*
+                    second value > third value
+                    shape \ can be interpolated by connecting first and third point -> 33% compression
+                */
+                return [first, third];
+            }
+        }
+    }
+
+    private compress(dataPoints: IDataPoint[]): IDataPoint[] {
+        const result: IDataPoint[] = [];
+        for (let i: number = 0; i < dataPoints.length - 2; i += 3) {
+            result.push(...this.getCompressedResult(dataPoints[i], dataPoints[i + 1], dataPoints[i + 2]));
+        }
+        return result;
+    }
+
+    public compressRounds(dataPoints: IDataPoint[], rounds: number = this.rounds): IDataPoint[] {
+        let result = dataPoints;
+        for (let round: number = 0; round < rounds; round++) {
+            result = this.compress(result);
         }
         return result;
     }

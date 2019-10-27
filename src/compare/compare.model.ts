@@ -7,7 +7,4 @@ export class Compare {
     public static isLessThan(a: IDataPoint, b: IDataPoint): boolean {
         return a.value < b.value;
     }
-    public static isMoreThan(a: IDataPoint, b: IDataPoint): boolean {
-        return a.value > b.value;
-    }
 }

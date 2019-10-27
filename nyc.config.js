@@ -1,4 +1,3 @@
-
 module.exports = {
     extension: [
         '.ts'
@@ -7,7 +6,12 @@ module.exports = {
         'src/**/*.ts'
     ],
     exclude: [
-        'src/**/*.spec.ts'
+        'src/**/*.spec.ts',
+        'src/**/index.ts',
+        'src/**/*.enum.ts',
+        'src/**/*.interface.ts',
+        'src/**/*.type.ts',
+        'src/**/*.module.ts'
     ],
     reporter: [
         'text',

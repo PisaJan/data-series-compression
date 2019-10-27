@@ -118,10 +118,10 @@ export class CompressionService {
 
     public compressByCompressionRatio(dataPoints: IDataPoint[], compressionRatio: number): IDataPoint[] {
         if (compressionRatio < CompressionService.MINIMUM_COMPRESSION_RATIO) {
-            throw new Error(`Compression percentage cannot be set lower than ${CompressionService.MINIMUM_COMPRESSION_RATIO}%`);
+            throw new Error(`Compression percentage cannot be set lower than ${CompressionService.MINIMUM_COMPRESSION_RATIO}`);
         }
         if (compressionRatio > CompressionService.MAXIMUM_COMPRESSION_RATIO) {
-            throw new Error(`Compression percentage cannot be set higher than ${CompressionService.MAXIMUM_COMPRESSION_RATIO}%`);
+            throw new Error(`Compression percentage cannot be set higher than ${CompressionService.MAXIMUM_COMPRESSION_RATIO}`);
         }
         let result = dataPoints;
         while (CompressionService.getCompressionRatio(dataPoints.length, result.length) < compressionRatio) {

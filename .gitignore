@@ -1,5 +1,6 @@
 /node_modules
 /build
 /dist
+/test/coverage
 /.vscode/symbols.json
 *.marko.js

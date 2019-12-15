@@ -170,6 +170,17 @@ test('When 4 data points are compressed with limit 2, it returns 2 data points',
     t.is(compression.compressByLimit([first, second, third, fourth], 50).length, 2, 'Failed to return correct result');
 });
 
+test('When invalid limit is set, it throws exception', (t: ExecutionContext): void => {
+    const compression: CompressionService = new CompressionService(0);
+    const first: IDataPoint = {
+        time: new Date(1546300800000),
+        value: 300
+    };
+    t.throws(() => {
+        compression.compressByLimit([first], 0);
+    }, `Limit cannot be set lower than 0.2`);
+});
+
 test('When invalid conversion ratio is set, it throws exception', (t: ExecutionContext): void => {
     const compression: CompressionService = new CompressionService(0);
     t.throws(() => {

@@ -184,8 +184,8 @@ test('When invalid limit is set, it throws exception', (t: ExecutionContext): vo
 test('When invalid conversion ratio is set, it throws exception', (t: ExecutionContext): void => {
     const compression: CompressionService = new CompressionService(0);
     t.throws(() => {
-        compression.compressByCompressionRatio([], -1);
-    }, `Compression percentage cannot be set lower than 0`);
+        compression.compressByCompressionRatio([], 0.5);
+    }, `Compression percentage cannot be set lower than 1`);
     t.throws(() => {
         compression.compressByCompressionRatio([], 100);
     }, `Compression percentage cannot be set higher than 10`);

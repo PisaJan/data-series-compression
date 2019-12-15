@@ -4,7 +4,7 @@ import { Compare } from './../compare/compare.model';
 
 export class CompressionService {
     private static readonly MINIMUM_LIMIT_THRESHOLD: number = 0.2;
-    private static readonly MINIMUM_COMPRESSION_RATIO: number = 0;
+    private static readonly MINIMUM_COMPRESSION_RATIO: number = 1;
     private static readonly MAXIMUM_COMPRESSION_RATIO: number = 10;
 
     public constructor(private readonly deviation: number, private readonly rounds: number = 1) {

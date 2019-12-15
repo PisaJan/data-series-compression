@@ -1,6 +1,6 @@
 {
     "name": "data-series-compression",
-    "version": "0.0.1-alpha.1",
+    "version": "0.0.1-alpha.2",
     "description": "Small and simple library aimed to reduce number of data points without significant loss of important values.",
     "author": "Jan Pisa <jan@janpisa.cz>",
     "scripts": {

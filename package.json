@@ -1,6 +1,6 @@
 {
     "name": "data-series-compression",
-    "version": "0.0.1-alpha.2",
+    "version": "0.0.1-alpha.3",
     "description": "Small and simple library aimed to reduce number of data points without significant loss of important values.",
     "author": "Jan Pisa <jan@janpisa.cz>",
     "scripts": {
@@ -40,6 +40,7 @@
         "pretty-quick": "^1.11.1",
         "source-map-support": "^0.5.13",
         "ts-node": "^8.4.1",
+        "tslint-config-airbnb": "^5.11.2",
         "typescript": "^3.6.4"
     }
 }

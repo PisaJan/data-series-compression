@@ -90,11 +90,15 @@ export class CompressionService {
     }
 
     private compress(dataPoints: IDataPoint[]): IDataPoint[] {
-        const result: IDataPoint[] = [];
-        for (let i: number = 0; i < dataPoints.length - 2; i += 3) {
-            result.push(...this.compressThreeDataPoints(dataPoints[i], dataPoints[i + 1], dataPoints[i + 2]));
+        const result: Set<IDataPoint> = new Set();
+        for (let i: number = 0; i < dataPoints.length - 2; i += 1) {
+            for (const dataPoint of this.compressThreeDataPoints(dataPoints[i], dataPoints[i + 1], dataPoints[i + 2])) {
+                result.add(dataPoint);
+            }
         }
-        return result;
+        result.add(dataPoints[dataPoints.length - 2]);
+        result.add(dataPoints[dataPoints.length - 1]);
+        return Array.from(result.values());
     }
 
     public compressByRounds(dataPoints: IDataPoint[], rounds: number = this.rounds): IDataPoint[] {

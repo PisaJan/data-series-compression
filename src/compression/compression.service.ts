@@ -3,9 +3,12 @@ import { IDataPoint } from '../data/point';
 import { Compare } from './../compare/compare.model';
 
 export class CompressionService {
+    private static readonly MAXIMUM_ROUNDS: number = 100;
     private static readonly MINIMUM_LIMIT_THRESHOLD: number = 0.2;
     private static readonly MINIMUM_COMPRESSION_RATIO: number = 1;
     private static readonly MAXIMUM_COMPRESSION_RATIO: number = 10;
+
+    private currentResult: Set<IDataPoint> = new Set();
 
     public constructor(private readonly deviation: number, private readonly rounds: number = 1) {
         if (deviation < 0) {
@@ -23,12 +26,15 @@ export class CompressionService {
                 second value ≈ third value
                 shape -- is almost straight line (dependent on deviation) -> 66% compression
             */
+            this.currentResult.delete(first);
+            this.currentResult.delete(third);
             return [second];
         } else {
             /*
                 second value ≠ third value
                 shape _/ or shape ¯\ can be interpolated by connecting first and third point -> 33% compression
              */
+            this.currentResult.delete(second);
             return [first, third];
         }
     }
@@ -40,12 +46,14 @@ export class CompressionService {
                 second value ≈ third value
                 shape /¯ can be interpolated by connecting first and third point -> 33% compression
              */
+            this.currentResult.delete(second);
             return [first, third];
         } else if (Compare.isLessThan(second, third)) {
             /*
                 second value < third value
                 shape / can be interpolated by connecting first and third point -> 33% compression
             */
+            this.currentResult.delete(second);
             return [first, third];
         } else {
             /*
@@ -63,6 +71,7 @@ export class CompressionService {
                 second value ≈ third value
                 shape \_ can be interpolated by connecting first and third point -> 33% compression
             */
+            this.currentResult.delete(second);
             return [first, third];
         } else if (Compare.isLessThan(second, third)) {
             /*
@@ -75,6 +84,7 @@ export class CompressionService {
                 second value > third value
                 shape \ can be interpolated by connecting first and third point -> 33% compression
             */
+            this.currentResult.delete(second);
             return [first, third];
         }
     }
@@ -90,15 +100,11 @@ export class CompressionService {
     }
 
     private compress(dataPoints: IDataPoint[]): IDataPoint[] {
-        const result: Set<IDataPoint> = new Set();
+        this.currentResult = new Set([...dataPoints]);
         for (let i: number = 0; i < dataPoints.length - 2; i += 1) {
-            for (const dataPoint of this.compressThreeDataPoints(dataPoints[i], dataPoints[i + 1], dataPoints[i + 2])) {
-                result.add(dataPoint);
-            }
+            this.compressThreeDataPoints(dataPoints[i], dataPoints[i + 1], dataPoints[i + 2]);
         }
-        result.add(dataPoints[dataPoints.length - 2]);
-        result.add(dataPoints[dataPoints.length - 1]);
-        return Array.from(result.values());
+        return Array.from(this.currentResult.values());
     }
 
     public compressByRounds(dataPoints: IDataPoint[], rounds: number = this.rounds): IDataPoint[] {
@@ -114,9 +120,11 @@ export class CompressionService {
             throw new Error(`Limit cannot be set lower than ${dataPoints.length * CompressionService.MINIMUM_LIMIT_THRESHOLD}`);
         }
         let result = dataPoints;
+        let i: number = 0;
         do {
             result = this.compress(result);
-        } while (result.length > limit);
+            i++;
+        } while (result.length > limit && i < CompressionService.MAXIMUM_ROUNDS);
         return result;
     }
 
@@ -128,8 +136,10 @@ export class CompressionService {
             throw new Error(`Compression percentage cannot be set higher than ${CompressionService.MAXIMUM_COMPRESSION_RATIO}`);
         }
         let result = dataPoints;
-        while (CompressionService.getCompressionRatio(dataPoints.length, result.length) < compressionRatio) {
+        let i: number = 0;
+        while (CompressionService.getCompressionRatio(dataPoints.length, result.length) < compressionRatio && i < CompressionService.MAXIMUM_ROUNDS) {
             result = this.compress(result);
+            i++;
         }
         return result;
     }

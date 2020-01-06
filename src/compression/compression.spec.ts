@@ -164,8 +164,8 @@ test('When 4 data points are compressed with limit 2, it returns 2 data points',
         value: 100
     };
     const fourth: IDataPoint = {
-        time: new Date(1546300802000),
-        value: 150
+        time: new Date(1546300803000),
+        value: 50
     };
     t.is(compression.compressByLimit([first, second, third, fourth], 50).length, 2, 'Failed to return correct result');
 });
@@ -206,8 +206,8 @@ test('When 4 data points are compressed by ration 1:2, it returns 2 data points'
         value: 100
     };
     const fourth: IDataPoint = {
-        time: new Date(1546300802000),
-        value: 150
+        time: new Date(1546300803000),
+        value: 50
     };
     t.is(compression.compressByCompressionRatio([first, second, third, fourth], 2).length, 2, 'Failed to return correct result');
 });

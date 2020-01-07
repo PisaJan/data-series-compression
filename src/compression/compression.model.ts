@@ -19,31 +19,39 @@ export class Compression {
                 second value ≈ third value
                 shape -- is almost straight line (dependent on deviation) -> 66% compression
             */
-            this.result.delete(first);
-            this.result.delete(third);
+            if (this.result.has(second)) {
+                this.result.delete(first);
+                this.result.delete(third);
+            }
         } else {
             /*
                 second value ≠ third value
                 shape _/ or shape ¯\ can be interpolated by connecting first and third point -> 33% compression
              */
-            this.result.delete(second);
+            if (this.result.has(first)) {
+                this.result.delete(second);
+            }
         }
     }
 
-    private handleFirstIsLessThanSecond(second: IDataPoint, third: IDataPoint): void {
+    private handleFirstIsLessThanSecond(first: IDataPoint, second: IDataPoint, third: IDataPoint): void {
         /* first value < second value */
         if (Compare.isEqual(second, third, this.deviation)) {
             /*
                 second value ≈ third value
                 shape /¯ can be interpolated by connecting first and third point -> 33% compression
              */
-            this.result.delete(second);
+            if (this.result.has(first)) {
+                this.result.delete(second);
+            }
         } else if (Compare.isLessThan(second, third)) {
             /*
                 second value < third value
                 shape / can be interpolated by connecting first and third point -> 33% compression
             */
-            this.result.delete(second);
+            if (this.result.has(first)) {
+                this.result.delete(second);
+            }
         }
         /*
             second value > third value
@@ -51,14 +59,16 @@ export class Compression {
         */
     }
 
-    private handleFirstIsMoreThanSecond(second: IDataPoint, third: IDataPoint): void {
+    private handleFirstIsMoreThanSecond(first: IDataPoint, second: IDataPoint, third: IDataPoint): void {
         /* first value > second value */
         if (Compare.isEqual(second, third, this.deviation)) {
             /*
                 second value ≈ third value
                 shape \_ can be interpolated by connecting first and third point -> 33% compression
             */
-            this.result.delete(second);
+            if (this.result.has(first)) {
+                this.result.delete(second);
+            }
         } else if (Compare.isLessThan(second, third)) {
             /*
                 second value < third value
@@ -69,7 +79,9 @@ export class Compression {
                 second value > third value
                 shape \ can be interpolated by connecting first and third point -> 33% compression
             */
-            this.result.delete(second);
+            if (this.result.has(first)) {
+                this.result.delete(second);
+            }
         }
     }
 
@@ -77,9 +89,9 @@ export class Compression {
         if (Compare.isEqual(first, second, this.deviation)) {
             this.handleFirstIsEqualToSecond(first, second, third);
         } else if (Compare.isLessThan(first, second)) {
-            this.handleFirstIsLessThanSecond(second, third);
+            this.handleFirstIsLessThanSecond(first, second, third);
         } else {
-            this.handleFirstIsMoreThanSecond(second, third);
+            this.handleFirstIsMoreThanSecond(first, second, third);
         }
     }
 

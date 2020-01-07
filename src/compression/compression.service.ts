@@ -37,7 +37,10 @@ export class CompressionService {
         let i: number = 0;
         do {
             result = this.compress(result);
+            console.log('res', result, i);
             i++;
+            console.log('res len', result.length, limit);
+            console.log('condition', result.length > limit, i < CompressionService.MAXIMUM_ROUNDS);
         } while (result.length > limit && i < CompressionService.MAXIMUM_ROUNDS);
         return result;
     }

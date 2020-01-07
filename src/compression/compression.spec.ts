@@ -167,7 +167,7 @@ test('When 4 data points are compressed with limit 2, it returns 2 data points',
         time: new Date(1546300803000),
         value: 50
     };
-    t.is(compression.compressByLimit([first, second, third, fourth], 50).length, 2, 'Failed to return correct result');
+    t.is(compression.compressByLimit([first, second, third, fourth], 2).length, 2, 'Failed to return correct result');
 });
 
 test('When invalid limit is set, it throws exception', (t: ExecutionContext): void => {
@@ -210,6 +210,27 @@ test('When 4 data points are compressed by ration 1:2, it returns 2 data points'
         value: 50
     };
     t.is(compression.compressByCompressionRatio([first, second, third, fourth], 2).length, 2, 'Failed to return correct result');
+});
+
+test('When first value is less then second value and second value is equal to third value and fourth value is less than third value, it returns first, third and fourth data point', (t: ExecutionContext): void => {
+    const compression: CompressionService = new CompressionService(0);
+    const first: IDataPoint = {
+        time: new Date(1546300800000),
+        value: 100
+    };
+    const second: IDataPoint = {
+        time: new Date(1546300801000),
+        value: 200
+    };
+    const third: IDataPoint = {
+        time: new Date(1546300802000),
+        value: 200
+    };
+    const fourth: IDataPoint = {
+        time: new Date(1546300802000),
+        value: 100
+    };
+    t.deepEqual(compression.compressByRounds([first, second, third, fourth], 1), [first, third, fourth], 'Failed to return correct result');
 });
 
 test('When original size is 100 and current size is 25, it returns compression ratio is 1:4', (t: ExecutionContext): void => {

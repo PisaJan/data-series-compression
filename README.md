@@ -7,7 +7,7 @@
 [![Minified size](https://img.shields.io/bundlephobia/min/data-series-compression)](https://www.npmjs.com/package/data-series-compression)
 [![Npm downloads](https://img.shields.io/npm/dm/data-series-compression?color=blue)](https://www.npmjs.com/package/data-series-compression)
 
-[![License MIT](https://img.shields.io/npm/l/data-series-compression?color=orange)](https://cs.wikipedia.org/wiki/Licence_MIT)
+[![License MIT](https://img.shields.io/npm/l/data-series-compression?color=orange)](https://en.wikipedia.org/wiki/MIT_License)
 
 Simple library aimed to reduce number of data points without loss of significant values (local extremes).
 

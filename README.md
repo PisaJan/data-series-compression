@@ -1,13 +1,13 @@
 # data-series-compression
 
 [![Coverage Status](https://coveralls.io/repos/istanbuljs/nyc/badge.svg?branch=)](https://coveralls.io/r/istanbuljs/nyc?branch=master)
-![GitHub issues](https://img.shields.io/github/issues/pisajan/data-series-compression)
+[![GitHub issues](https://img.shields.io/github/issues/pisajan/data-series-compression)](https://github.com/PisaJan/data-series-compression/issues)
 
-![Npm version](https://img.shields.io/npm/v/data-series-compression?color=blue)
-[![Minified size](https://img.shields.io/bundlephobia/min/data-series-compression)](https://conventionalcommits.org)
-![Npm downloads](https://img.shields.io/npm/dm/data-series-compression?color=blue)
+[![Npm version](https://img.shields.io/npm/v/data-series-compression?color=blue)](https://www.npmjs.com/package/data-series-compression)
+[![Minified size](https://img.shields.io/bundlephobia/min/data-series-compression)](https://www.npmjs.com/package/data-series-compression)
+[![Npm downloads](https://img.shields.io/npm/dm/data-series-compression?color=blue)](https://www.npmjs.com/package/data-series-compression)
 
-![License MIT](https://img.shields.io/npm/l/data-series-compression?color=orange)
+[![License MIT](https://img.shields.io/npm/l/data-series-compression?color=orange)](https://cs.wikipedia.org/wiki/Licence_MIT)
 
 Simple library aimed to reduce number of data points without loss of significant values (local extremes).
 

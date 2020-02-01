@@ -9,7 +9,9 @@
 
 [![License MIT](https://img.shields.io/npm/l/data-series-compression?color=orange)](https://en.wikipedia.org/wiki/MIT_License)
 
-Simple library aimed to reduce number of data points without loss of significant values (local extremes). - [DEMO](https://pisajan.github.io/data-series-compression-frontend-demo/)
+Simple library aimed to reduce number of data points without loss of significant values (local extremes).
+
+[DEMO](https://pisajan.github.io/data-series-compression-frontend-demo/)
 
 ## Features
 

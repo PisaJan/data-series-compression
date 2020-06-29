@@ -1,8 +1,57 @@
 import test, { ExecutionContext } from 'ava';
-
 import { IDataPoint } from '../data/point';
-
 import { CompressionService } from './compression.service';
+
+const MEDIUM_DATASET_FIXTURE: IDataPoint[] = [
+    {
+        time: new Date(1546300800000),
+        value: 125
+    },
+    {
+        time: new Date(1546300801000),
+        value: 130
+    },
+    {
+        time: new Date(1546300802000),
+        value: 137
+    },
+    {
+        time: new Date(1546300803000),
+        value: 64
+    },
+    {
+        time: new Date(1546300804000),
+        value: 69
+    },
+    {
+        time: new Date(1546300805000),
+        value: 88
+    },
+    {
+        time: new Date(1546300806000),
+        value: 89
+    },
+    {
+        time: new Date(1546300807000),
+        value: 90
+    },
+    {
+        time: new Date(1546300808000),
+        value: 95
+    },
+    {
+        time: new Date(1546300809000),
+        value: 45
+    },
+    {
+        time: new Date(1546300810000),
+        value: 48
+    },
+    {
+        time: new Date(1546300811000),
+        value: 52
+    }
+];
 
 test('When CompressionService is instantiated, it does not throw exception', (t: ExecutionContext): void => {
     t.notThrows((): CompressionService => new CompressionService(0), 'Failed to instantiate class CompressionService');
@@ -210,6 +259,18 @@ test('When 4 data points are compressed by ration 1:2, it returns 2 data points'
         value: 50
     };
     t.is(compression.compressByCompressionRatio([first, second, third, fourth], 2).length, 2, 'Failed to return correct result');
+});
+
+test.only('Compression ratio results differs for different float ratios', (t: ExecutionContext): void => {
+    const compression: CompressionService = new CompressionService(0);
+    const zeroCompressionCount = compression.compressByCompressionRatio(MEDIUM_DATASET_FIXTURE, 1).length;
+    const onePointFiveCompressionCount = compression.compressByCompressionRatio(MEDIUM_DATASET_FIXTURE, 1.5).length;
+    const onePointSevenCompressionCount = compression.compressByCompressionRatio(MEDIUM_DATASET_FIXTURE, 1.7).length;
+    const halfCompressionCount = compression.compressByCompressionRatio(MEDIUM_DATASET_FIXTURE, 2).length;
+    t.is(zeroCompressionCount, MEDIUM_DATASET_FIXTURE.length, 'Compression ratio 1 is broken');
+    t.is(onePointFiveCompressionCount, Math.floor(MEDIUM_DATASET_FIXTURE.length / 1.5), 'Compression ratio 1.5 is broken');
+    t.is(onePointSevenCompressionCount, Math.floor(MEDIUM_DATASET_FIXTURE.length / 1.7), 'Compression ratio 1.7 is broken');
+    t.is(halfCompressionCount, Math.floor(MEDIUM_DATASET_FIXTURE.length / 2), 'Compression ratio 2 is broken');
 });
 
 test('When first value is less then second value and second value is equal to third value and fourth value is less than third value, it returns first, third and fourth data point', (t: ExecutionContext): void => {

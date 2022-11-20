@@ -11,8 +11,6 @@
 
 Simple library aimed to reduce number of data points without loss of significant values (local extremes).
 
-[DEMO](https://pisajan.github.io/data-series-compression-frontend-demo/)
-
 ## Features
 
 -   Compress data by specified number of rounds (one round removes ~30% of values).
